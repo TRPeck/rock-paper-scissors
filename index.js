@@ -31,6 +31,8 @@
         let choice = prompt("Rock, paper, or scissors?");
         if (choice != null) { choice = choice.toLowerCase(); }
         switch(choice) {
+            case null:
+                break;
             case "rock":
                 return "rock";
             case "paper":
@@ -97,6 +99,7 @@
 
     function playGame() {
         let humanScore = 0, computerScore = 0;
+        let endGame = false;
 
         function playRound(humanChoice, computerChoice) {
             if (humanChoice == "rock" && computerChoice == "scissors") {
@@ -123,19 +126,26 @@
                 computerScore += 1;
                 console.log("You lose! Scissors beats Paper!");
             }
+            else if (humanChoice == null) {
+                endGame = true;
+                console.log("You quit.");
+            }
             else {
                 console.log("You both chose " + humanChoice.replace(humanChoice[0], humanChoice[0].toUpperCase()) + "! It's a tie!");
             }
         }
 
-        while(humanScore < 5 && computerScore < 5) {
+        while((humanScore < 5 && computerScore < 5) && endGame == false) {
             playRound(getHumanChoice(), getComputerChoice());
         }
 
         if (humanScore == 5) {
             console.log("You win the game!");
         }
-        else {
+        else if (computerScore == 5) {
             console.log("You lost! Better luck next time!");
+        }
+        else {
+            console.log("Thanks for playing!");
         }
     }
